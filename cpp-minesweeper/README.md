@@ -1,53 +1,72 @@
 # C++ Minesweeper
 
-A small Minesweeper project written in C++ with a clean structure that is easy to extend into a graphical version later.
+A C++ Minesweeper project with two playable versions:
 
-## Current Version
+- `minesweeper_console`: the original console game
+- `minesweeper_sfml`: a graphical second version with menu and difficulty selection
 
-This first version is a playable console game with:
+## Version 2 Highlights
 
-- A 9x9 board and 10 mines
+- Beginner, intermediate, and expert difficulty modes
+- SFML graphical interface with a menu screen
+- Mouse controls for reveal and flag actions
 - First-move safety
 - Recursive reveal for empty areas
-- Flag placement and removal
-- Win and loss detection
-- A simple command-based interface
+- Win and loss banners
+- Timer and remaining-mine counter
+- Project-local image assets for tiles, mines, and flags
 
 ## Project Structure
 
 ```text
 cpp-minesweeper/
-├─ include/
-├─ src/
-├─ CMakeLists.txt
-└─ README.md
+|- assets/
+|  \- images/
+|- include/
+|- src/
+|- CMakeLists.txt
+\- README.md
 ```
 
 ## Build
 
-### With CMake
+### Console version with g++
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Wpedantic -I include src/main.cpp src/Board.cpp src/Game.cpp -o minesweeper_console
+```
+
+### CMake
 
 ```bash
 cmake -S . -B build
 cmake --build build
 ```
 
-### With g++
+The CMake project always builds `minesweeper_console`.
+If SFML 2.5 or newer is available on your machine, it also builds `minesweeper_sfml`.
 
-```bash
-g++ -std=c++17 -Wall -Wextra -Wpedantic -I include src/main.cpp src/Board.cpp src/Game.cpp -o minesweeper
-```
+If SFML is not installed, CMake falls back to the console target only.
 
 ## Run
 
+### Console
+
 ```bash
-./build/minesweeper
+./minesweeper_console
 ```
 
-On Windows with Visual Studio generators, the executable may also appear in a configuration directory such as `build/Debug/`.
-If you build with `g++`, run `./minesweeper` instead.
+### SFML GUI
+
+```bash
+./build/minesweeper_sfml
+```
+
+On Windows with multi-config generators, the GUI executable may be inside a folder such as `build/Debug/`.
 
 ## Controls
+
+### Console
 
 - `r row col`: reveal a cell
 - `f row col`: place or remove a flag
@@ -55,16 +74,30 @@ If you build with `g++`, run `./minesweeper` instead.
 - `h`: show help
 - `q`: quit
 
-Example:
+### SFML GUI
 
-```text
-r 3 4
-f 1 7
-```
+- Left click: reveal a cell
+- Right click: place or remove a flag
+- `Reset` button: restart the current round
+- `Menu` button or `Esc`: return to the difficulty menu
+
+## Assets
+
+The GUI version includes local image assets in `assets/images/`:
+
+- `tile_hidden.png`
+- `tile_revealed.png`
+- `icon_mine.png`
+- `icon_flag.png`
+
+## Notes
+
+- The game logic is shared between the console and GUI versions.
+- The GUI uses project-local art assets and a code-defined bitmap label renderer, so it does not depend on an external font file.
 
 ## Next Ideas
 
-- Add beginner, intermediate, and expert difficulty modes
-- Build an SFML graphical interface
-- Add a timer and best-score tracking
-- Support mouse input in the GUI version
+- Add chord-click behavior for revealed numbered cells
+- Add a best-time record per difficulty
+- Add sound effects and a polished victory screen
+- Package the SFML version for easier distribution

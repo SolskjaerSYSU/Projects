@@ -22,6 +22,8 @@ public:
     bool hasWon() const;
     bool hasExploded() const;
     bool isFirstMove() const;
+    std::size_t flagCount() const;
+    bool isExplodedCell(std::size_t row, std::size_t col) const;
 
     std::size_t rows() const;
     std::size_t cols() const;
@@ -40,5 +42,7 @@ private:
     std::vector<std::vector<Cell>> grid_;
     bool firstMove_ = true;
     bool exploded_ = false;
+    std::size_t explodedRow_ = 0;
+    std::size_t explodedCol_ = 0;
     std::mt19937 rng_;
 };

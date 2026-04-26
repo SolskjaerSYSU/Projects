@@ -32,6 +32,8 @@ void Board::reset() {
     grid_.assign(rows_, std::vector<Cell>(cols_));
     firstMove_ = true;
     exploded_ = false;
+    explodedRow_ = 0;
+    explodedCol_ = 0;
 }
 
 bool Board::reveal(std::size_t row, std::size_t col) {
@@ -53,6 +55,8 @@ bool Board::reveal(std::size_t row, std::size_t col) {
     current.isRevealed = true;
     if (current.hasMine) {
         exploded_ = true;
+        explodedRow_ = row;
+        explodedCol_ = col;
         return true;
     }
 
@@ -99,6 +103,24 @@ bool Board::hasExploded() const {
 
 bool Board::isFirstMove() const {
     return firstMove_;
+}
+
+std::size_t Board::flagCount() const {
+    std::size_t total = 0;
+
+    for (std::size_t row = 0; row < rows_; ++row) {
+        for (std::size_t col = 0; col < cols_; ++col) {
+            if (grid_[row][col].isFlagged) {
+                ++total;
+            }
+        }
+    }
+
+    return total;
+}
+
+bool Board::isExplodedCell(std::size_t row, std::size_t col) const {
+    return exploded_ && row == explodedRow_ && col == explodedCol_;
 }
 
 std::size_t Board::rows() const {
