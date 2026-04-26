@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Minesweeper Console",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-Wall",
+                "-Wextra",
+                "-Wpedantic",
+                "-I",
+                "${workspaceFolder}/cpp-minesweeper/include",
+                "${workspaceFolder}/cpp-minesweeper/src/main.cpp",
+                "${workspaceFolder}/cpp-minesweeper/src/Board.cpp",
+                "${workspaceFolder}/cpp-minesweeper/src/Game.cpp",
+                "-o",
+                "${workspaceFolder}/cpp-minesweeper/minesweeper_console.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Build the cpp-minesweeper console executable from the workspace root."
+        },
+        {
+            "label": "Run Minesweeper Console",
+            "type": "shell",
+            "command": "${workspaceFolder}/cpp-minesweeper/minesweeper_console.exe",
+            "options": {
+                "cwd": "${workspaceFolder}/cpp-minesweeper"
+            },
+            "dependsOn": "Build Minesweeper Console",
+            "problemMatcher": [],
+            "detail": "Build and run the cpp-minesweeper console executable from the workspace root."
+        }
+    ]
+}
